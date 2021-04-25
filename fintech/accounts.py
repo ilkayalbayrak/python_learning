@@ -5,39 +5,14 @@ import abc
 
 
 class Account(metaclass=abc.ABCMeta):
-    @classmethod
-    def __subclasshook__(cls, subclass):
-        return (hasattr(subclass, 'account_number') and
-                callable(subclass.account_number) and
-                hasattr(subclass, 'account_holder') and
-                callable(subclass.account_holder) or
-                hasattr(subclass, 'balance') and
-                callable(subclass.balance) or
-                hasattr(subclass, 'deposit') and
-                callable(subclass.deposit) or
-                hasattr(subclass, 'withdraw') and
-                callable(subclass.withdraw) or
-                NotImplemented)
+    def __enter__(self):
+        print('__enter__')
+        return self
 
-    # instance_count = 0
-    #
-    # @classmethod
-    # @abc.abstractmethod
-    # def increase_instance_count(cls):
-    #     cls.instance_count += 1
-    #
-    # @classmethod
-    # @abc.abstractmethod
-    # def print_instance_count(cls):
-    #     print("Current instance count: {}".format(cls.instance_count))
-
-    # def __init__(self, account_number, account_holder, balance):
-    #     # self.increase_instance_count()
-    #     # self.print_instance_count()
-    #     self._account_number = account_number
-    #     self._account_holder = account_holder
-    #     self._balance = balance
-    #     self._acc_type = self.__class__.__name__
+    # Args exception type, exception value and traceback
+    def __exit__(self, *args):
+        print('__exit__:', args)
+        return True
 
     @property
     @abc.abstractmethod
@@ -167,7 +142,7 @@ class DepositAccount(Account):
             self._account_number) + " - Acc_holder: " + self._account_holder + " - Balance: " + str(
             self._balance) + " - Interest_rate: " + str(self._interest_rate)
 
-
+# @Account.register
 class CurrentAccount(Account):
 
     def __init__(self, account_number, account_holder, balance, overdraft_limit):

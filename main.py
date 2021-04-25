@@ -18,6 +18,13 @@ if __name__ == "__main__":
     print(acc1.__str__())
     print(acc2.__str__())
     print(acc3.__str__())
+    print(issubclass(accounts.CurrentAccount, accounts.Account))
+    print(isinstance(acc1, accounts.Account))
+
+    with accounts.CurrentAccount('891', 'Adam', 5.0, 50.0) as acc:
+        acc.deposit(23.0)
+        acc.withdraw(12.33)
+        print(acc.balance)
 
 
     # class MyABC(ABC):
